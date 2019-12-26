@@ -1,0 +1,10 @@
+#text{
+    -fx-font-size: 25px; 
+    -fx-font-weight: 900;
+    -fx-color: red;
+}
+
+
+#rectangle{
+    -fx-fill: linear-gradient(black 0%, white 50%, white 50%, black 100%);
+}
