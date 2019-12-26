@@ -36,6 +36,7 @@ public class HelloJavaFX extends Application {
     
         Scene scene = new Scene(root, 300, 250);
         
+        //txt.setStyle("-fx-font-size: 25px; -fx-font-weight: 900;");
         txt.setFill(Color.RED);
         scene.getStylesheets().add(getClass().getResource("style.css").toString());
         txt.setId("text");
