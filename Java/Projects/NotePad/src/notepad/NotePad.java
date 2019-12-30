@@ -4,14 +4,10 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
-import javax.swing.event.HyperlinkEvent;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import javafx.stage.FileChooser;
 
 /**
@@ -20,8 +16,10 @@ import javafx.stage.FileChooser;
  */
 public class NotePad extends Application {
     
+    public static File srcFile;
     @Override
     public void start(Stage primaryStage) {
+        
         BorderPane pane = new BorderPane();
         
         // Create menubar
@@ -93,12 +91,13 @@ public class NotePad extends Application {
         });
         
         // event-handling for open_menuItem with file-browser open dialog
+        // TO-DO: move the cursor at the end of text after opening a file
         open_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event){
                 FileChooser fileChooser = new FileChooser();
-                File file = fileChooser.showOpenDialog(primaryStage);
+                NotePad.srcFile = fileChooser.showOpenDialog(primaryStage);
                 try{
-                    FileInputStream fis = new FileInputStream(file);
+                    FileInputStream fis = new FileInputStream(NotePad.srcFile);
                     int size = fis.available();
                     byte[] b = new byte[size];
                     fis.read(b);
@@ -109,14 +108,38 @@ public class NotePad extends Application {
                 catch(Exception e){
                     e.printStackTrace();
                 }
-                
-                
                 //System.out.println(file);
-                 
             }
         });
         // TO-DO: event-handling for save_menuItem
-        // TO-DO: event-handling for exit_menuItem
+        save_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                if(NotePad.srcFile == null){
+                    FileChooser fileChooser = new FileChooser();
+                    NotePad.srcFile = fileChooser.showOpenDialog(primaryStage);
+                }
+                    FileWriter fileWriter = null;
+                    PrintWriter printWriter = null;
+                    BufferedReader bufferedReader = null;
+                    
+                    // opening a file in write (trancate) mode using FileWriter
+                    try{
+                        fileWriter = new FileWriter(NotePad.srcFile);
+                        printWriter = new PrintWriter(fileWriter);
+                        String text = textArea.getText();
+                        printWriter.println(text);
+                        printWriter.close();
+                        fileWriter.close();
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    
+                }
+        });
+        // event-handling for exit_menuItem
+        // TO-DO: before exiting, if there is un-saved text --> open dialog
         exit_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event){
                 primaryStage.close();
