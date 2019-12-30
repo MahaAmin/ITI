@@ -20,29 +20,52 @@ public class NotePad extends Application {
     public void start(Stage primaryStage) {
         BorderPane pane = new BorderPane();
         
-        // TO-DO: Create menubar
+        // Create menubar
         MenuBar menuBar = new MenuBar();
         
-        // TO-DO: Create textArea
+        // Create textArea
         TextArea textArea = new TextArea();
         
-        // TO-DO: create menus in menuBar (File, Edit, Help)
+        // create menus in menuBar (File, Edit, Help)
         Menu file = new Menu("File");
         Menu edit = new Menu("Edit");
         Menu help = new Menu("Help");
         
-        // TO-DO: add menus to menuBar
+        // add menus to menuBar
         menuBar.getMenus().addAll(file, edit, help);
         
-        // TO-DO: Create menuItems in for File_Menu (new, Open..., Save, Exit)
+        // Create menuItems in for File_Menu (new, Open..., Save, Exit)
         MenuItem new_MenuItem = new MenuItem("new");
         MenuItem open_MenuItem = new MenuItem("Open...");
         MenuItem save_MenuItem = new MenuItem("Save");
+        
+        SeparatorMenuItem separator2_MenuItem = new SeparatorMenuItem();
         MenuItem exit_MenuItem = new MenuItem("Exit");
         
         // Add menu_items to File_Menu
-        file.getItems().addAll(new_MenuItem, open_MenuItem, save_MenuItem, exit_MenuItem);
+        file.getItems().addAll(new_MenuItem, open_MenuItem, save_MenuItem, separator2_MenuItem, exit_MenuItem);
         
+        
+        // Create menuItems for Edit_Menu (Undo, Cut, Copy, Paste, Delete, Select All)
+        MenuItem undo_MenuItem = new MenuItem("Undo"); 
+        SeparatorMenuItem separator1_MenuItem = new SeparatorMenuItem();
+        
+        MenuItem cut_MenuItem = new MenuItem("Cut");
+        MenuItem copy_MenuItem = new MenuItem("Copy");
+        MenuItem paste_MenuItem = new MenuItem("Paste");
+        MenuItem delete_MenuItem = new MenuItem("Delete");
+        
+        SeparatorMenuItem separator3_MenuItem = new SeparatorMenuItem();
+        MenuItem selectAll_MenuItem = new MenuItem("Select All");
+        
+        edit.getItems().addAll(undo_MenuItem, separator1_MenuItem, cut_MenuItem, copy_MenuItem, paste_MenuItem, delete_MenuItem, separator3_MenuItem, selectAll_MenuItem);
+        
+        
+        // TO-DO: Create menuItems for Help Menu (About NotePad)
+        MenuItem about_MenuItem = new MenuItem("About NotePad");
+        
+        // Adding menuItems to Help menu
+        help.getItems().addAll(about_MenuItem);
         
         
         
