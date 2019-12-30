@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
 import javax.swing.event.HyperlinkEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -79,7 +82,35 @@ public class NotePad extends Application {
    
     // TO-DO: Event-Handling for FILE_MENU :
         // TO-DO: Event-handling for new_menuItem
+        new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.clear();
+            }
+        });
+        
         // TO-DO: event-handling for open_menuItem
+        open_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                FileChooser fileChooser = new FileChooser();
+                File file = fileChooser.showOpenDialog(primaryStage);
+                try{
+                    FileInputStream fis = new FileInputStream(file);
+                    int size = fis.available();
+                    byte[] b = new byte[size];
+                    fis.read(b);
+                    textArea.clear();
+                    textArea.setText(new String(b));
+                    fis.close();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                
+                
+                //System.out.println(file);
+                 
+            }
+        });
         // TO-DO: event-handling for save_menuItem
         // TO-DO: event-handling for exit_menuItem
         
@@ -131,11 +162,6 @@ public class NotePad extends Application {
         // TO-DO: event-handling for aboutNotePad_menuItem 
     
    
-        new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
-            public void handle(ActionEvent event){
-                System.out.println("new menu-item pressed");
-            }
-        });
         // TO-DO: shortcuts key_combinations 
         
      /// -------------------- SETTING-UP (pane, scene, stage) ------------------------
