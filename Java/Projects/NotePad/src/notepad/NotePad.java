@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
+import javax.swing.event.HyperlinkEvent;
 
 /**
  *
@@ -61,7 +62,7 @@ public class NotePad extends Application {
         edit.getItems().addAll(undo_MenuItem, separator1_MenuItem, cut_MenuItem, copy_MenuItem, paste_MenuItem, delete_MenuItem, separator3_MenuItem, selectAll_MenuItem);
         
         
-        // TO-DO: Create menuItems for Help Menu (About NotePad)
+        // Create menuItems for Help Menu (About NotePad)
         MenuItem about_MenuItem = new MenuItem("About NotePad");
         
         // Adding menuItems to Help menu
@@ -69,17 +70,88 @@ public class NotePad extends Application {
         
         
         
+        // add copyright footer 
+        Label copyrightFooter = new Label("Copy Rights: Made by Maha Amin, ITI-intake40. Cloud-Platform-Development Track. 2020.");
+        copyrightFooter.setPrefHeight(50);
+        
+    /// #######################################################################################
+   /// ---------------------- TO-DO: EVENT HANDLING -------------------------------- 
+   
+    // TO-DO: Event-Handling for FILE_MENU :
+        // TO-DO: Event-handling for new_menuItem
+        // TO-DO: event-handling for open_menuItem
+        // TO-DO: event-handling for save_menuItem
+        // TO-DO: event-handling for exit_menuItem
+        
+    // TO-DO: Event-Handling for EDIT_MENU :
+        // TO-DO: event-handling for undo_menuItem
+        undo_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.undo();
+            }
+        });
+        
+        // TO-DO: event-handling for cut_menuItem
+        cut_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.cut();
+            }
+        });
+        
+        // TO-DO: event-handling for copy_menuItem
+        copy_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.copy();
+            }
+        });
+        
+        // TO-DO: event-handling for paste_menuItem
+        paste_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.paste();
+            }
+        });
+        
+        // TO-DO: event-handling for delete_menuItem
+        delete_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.deleteText(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
+            }
+        });
+        
+        // TO-DO: event-handling for selectAll_menuItem
+        selectAll_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                textArea.selectAll();
+            }
+        });
+        
+        
+    // TO-DO: Event-Handling for Help_Menu :
+        // TO-DO: event-handling for aboutNotePad_menuItem 
+    
+   
+        new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                System.out.println("new menu-item pressed");
+            }
+        });
+        // TO-DO: shortcuts key_combinations 
+        
+     /// -------------------- SETTING-UP (pane, scene, stage) ------------------------
         // add menuBar to panel
         pane.setTop(menuBar);
         
         // add textArea to panel
         pane.setCenter(textArea);
+        
+        // add footer to panel
+        pane.setBottom(copyrightFooter);
         // creating scene
         Scene scene = new Scene(pane);
         
         // set title of Stage
         primaryStage.setTitle("NotePad");
-        
         
         // adding scene to stage
         primaryStage.setScene(scene);
