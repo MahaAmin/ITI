@@ -39,6 +39,9 @@ public class NotePad extends Application {
         menuBar.getMenus().addAll(file, edit, help);
         
         // Create menuItems in for File_Menu (new, Open..., Save, Exit)
+        // TO-DO: Add Save_As... menuItem
+        // TO-DO: Add Delete menuItem
+        
         MenuItem new_MenuItem = new MenuItem("new");
         MenuItem open_MenuItem = new MenuItem("Open...");
         MenuItem save_MenuItem = new MenuItem("Save");
@@ -81,14 +84,15 @@ public class NotePad extends Application {
    /// ---------------------- TO-DO: EVENT HANDLING -------------------------------- 
    
     // TO-DO: Event-Handling for FILE_MENU :
-        // TO-DO: Event-handling for new_menuItem
+        // Event-handling for new_menuItem
+        // TO-DO: if there is unsaved text --> open dialog message to save
         new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event){
                 textArea.clear();
             }
         });
         
-        // TO-DO: event-handling for open_menuItem
+        // event-handling for open_menuItem with file-browser open dialog
         open_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event){
                 FileChooser fileChooser = new FileChooser();
@@ -113,6 +117,11 @@ public class NotePad extends Application {
         });
         // TO-DO: event-handling for save_menuItem
         // TO-DO: event-handling for exit_menuItem
+        exit_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                primaryStage.close();
+            }
+        });
         
     // TO-DO: Event-Handling for EDIT_MENU :
         // TO-DO: event-handling for undo_menuItem
