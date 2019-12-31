@@ -82,6 +82,8 @@ public class NotePad extends Application {
         // TO-DO: if there is unsaved text --> open dialog message to save
         new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+
+                // Case 1 --> a file already exists and opened
                 if (NotePad.srcFile != null) {
                     try {
                         FileInputStream fis = new FileInputStream(NotePad.srcFile);
@@ -91,9 +93,11 @@ public class NotePad extends Application {
                         fis.close();
 
                         String textFromFile = new String(b);
+
+                        // Case 1.1 --> file already opened & new unsaved changes exists
                         if (!textArea.getText().equals(textFromFile)) {
 
-                            // open dialog to let user choose what to do whit unsaved text
+                            // open dialog to let user choose what to do with unsaved text
                             // create nodes
                             Label unsavedChanges_label = new Label("There are unsaved changes.\nDo you want to save them?");
                             Button save_btn = new Button("Save");
@@ -135,27 +139,55 @@ public class NotePad extends Application {
                             unsavedChanges_stage.show();
 
                             // ------------ Event-Handling For Save & Discard Buttons --------------
-                            
+                            // save_btn event-handling
+                            save_btn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                                public void handle(ActionEvent event) {
+                                    FileWriter fileWriter = null;
+                                    PrintWriter printWriter = null;
+                                    BufferedReader bufferedReader = null;
 
-                        } else {
-                            NotePad.srcFile = null;
-                            textArea.clear();
+                                    // opening a file in write (trancate) mode using FileWriter
+                                    try {
+                                        fileWriter = new FileWriter(NotePad.srcFile);
+                                        printWriter = new PrintWriter(fileWriter);
+                                        String text = textArea.getText();
+                                        printWriter.println(text);
+                                        printWriter.close();
+                                        fileWriter.close();
+                                        unsavedChanges_stage.close();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+
+                            discard_btn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                                public void handle(ActionEvent event) {
+                                    textArea.clear();
+                                    NotePad.srcFile = null;
+                                    unsavedChanges_stage.close();
+                                }
+                            });
+
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                } else {
+                } else // Case 2 --> No opened file
+                {
                     // TO-DO: open dialog having an option to save new file.
-                    NotePad.srcFile = null;
-                    textArea.clear();
+                    FileChooser fileChooser = new FileChooser();
+                    NotePad.srcFile = fileChooser.showOpenDialog(primaryStage);
                 }
             }
-        });
+        }
+        );
 
         // event-handling for open_menuItem with file-browser open dialog
         // move the cursor at the end of text after opening a file
         open_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+
             public void handle(ActionEvent event) {
                 FileChooser fileChooser = new FileChooser();
                 NotePad.srcFile = fileChooser.showOpenDialog(primaryStage);
@@ -176,7 +208,8 @@ public class NotePad extends Application {
                 }
                 //System.out.println(file);
             }
-        });
+        }
+        );
         // event-handling for save_menuItem
         save_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {

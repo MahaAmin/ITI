@@ -7,3 +7,9 @@ Java notePad
 Testing Save.
 
 Hello !!
+
+Eng Eman
+
+new text
+
+new new test
