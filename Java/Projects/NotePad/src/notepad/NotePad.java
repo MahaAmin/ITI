@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.*;
 import java.io.*;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 
 /**
@@ -74,6 +75,18 @@ public class NotePad extends Application {
         // add copyright footer 
         Label copyrightFooter = new Label("Copy Rights: Made by Maha Amin, ITI-intake40. Cloud-Platform-Development Track. 2020.");
         copyrightFooter.setPrefHeight(50);
+        
+        // Add shortcuts key-combination (accelerators)
+        new_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+q"));
+        open_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+w"));
+        save_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+e"));
+        exit_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+r"));
+        cut_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+t"));
+        copy_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+y"));
+        paste_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+u"));
+        delete_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+i"));
+        selectAll_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+p"));
+        about_MenuItem.setAccelerator(KeyCombination.keyCombination("Ctrl+a"));
 
         /// #######################################################################################
         /// ---------------------- TO-DO: EVENT HANDLING -------------------------------- 
