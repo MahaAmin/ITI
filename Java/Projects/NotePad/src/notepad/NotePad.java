@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.*;
 import java.io.*;
 import javafx.stage.FileChooser;
@@ -76,7 +77,7 @@ public class NotePad extends Application {
 
         /// #######################################################################################
         /// ---------------------- TO-DO: EVENT HANDLING -------------------------------- 
-        // TO-DO: Event-Handling for FILE_MENU :
+        // Event-Handling for FILE_MENU :
         // Event-handling for new_menuItem
         // TO-DO: if there is unsaved text --> open dialog message to save
         new_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -90,10 +91,52 @@ public class NotePad extends Application {
                         fis.close();
 
                         String textFromFile = new String(b);
-                        if (textArea.getText() != textFromFile) {
+                        if (!textArea.getText().equals(textFromFile)) {
+
+                            // open dialog to let user choose what to do whit unsaved text
+                            // create nodes
+                            Label unsavedChanges_label = new Label("There are unsaved changes.\nDo you want to save them?");
+                            Button save_btn = new Button("Save");
+                            save_btn.setPrefSize(100, 20);
+                            Button discard_btn = new Button("Discard");
+                            discard_btn.setPrefSize(100, 20);
+
+                            // create new stage
+                            Stage unsavedChanges_stage = new Stage();
+
+                            // create new BorderPane layout
+                            BorderPane unsavedChanges_pane = new BorderPane();
+
+                            // wrap 2 buttons in hbox node to set them in paneBottom
+                            HBox hbox = new HBox();
+                            //hbox.setPadding(new Insets(15, 12, 15, 12));
+                            hbox.setSpacing(10);
+                            hbox.getChildren().addAll(save_btn, discard_btn);
+
+                            // position nodes on layout
+                            unsavedChanges_pane.setTop(unsavedChanges_label);
+                            unsavedChanges_pane.setCenter(hbox);
+
+                            // create new scene
+                            Scene unsavedChanges_scene = new Scene(unsavedChanges_pane);
+
+                            // load scene on stage
+                            unsavedChanges_stage.setScene(unsavedChanges_scene);
+
+                            // set position (x,y) of stage relative to primaryStage
+                            unsavedChanges_stage.setX(primaryStage.getX() + 200);
+                            unsavedChanges_stage.setY(primaryStage.getY() + 100);
+
+                            // set stage width & height
+                            unsavedChanges_stage.setWidth(500);
+                            unsavedChanges_stage.setHeight(200);
+
+                            // show new dialog
+                            unsavedChanges_stage.show();
+
+                            // ------------ Event-Handling For Save & Discard Buttons --------------
                             
-                            // TO-DO: open dialog to let user choose what to do whit unsaved text
-                            System.out.println("to open dialog");
+
                         } else {
                             NotePad.srcFile = null;
                             textArea.clear();
@@ -102,8 +145,7 @@ public class NotePad extends Application {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     // TO-DO: open dialog having an option to save new file.
                     NotePad.srcFile = null;
                     textArea.clear();
@@ -124,10 +166,10 @@ public class NotePad extends Application {
                     fis.read(b);
                     textArea.clear();
                     textArea.setText(new String(b));
-                    
+
                     // move the cursor at the end of text after opening a file
                     textArea.end();
-                    
+
                     fis.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -212,44 +254,42 @@ public class NotePad extends Application {
             }
         });
 
-        // TO-DO: Event-Handling for Help_Menu :
-        // TO-DO: event-handling for aboutNotePad_menuItem 
+        // Event-Handling for Help_Menu :
+        // event-handling for aboutNotePad_menuItem 
         about_MenuItem.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                
+
                 // Open new "About NotePad" dialog window
-                
                 // crating text-node
                 Label aboutText = new Label("NotePad:\n    - Created by Maha Amin.\n    - ITI-40, CPD, Java.");
-                
+
                 // creating new stage
                 Stage aboutStage = new Stage();
                 aboutStage.setTitle("About NotePad");
-                
+
                 // creating new BorderPane layout
                 BorderPane aboutPane = new BorderPane();
-                
+
                 // creating new scene in aboutPane BorderPane
                 Scene aboutScene = new Scene(aboutPane);
-                
+
                 // putting Label aboutText at the center of BorderPane
                 aboutPane.setCenter(aboutText);
-                
+
                 // loading scene on stage
                 aboutStage.setScene(aboutScene);
-                
+
                 // setting position (x,y) of aboutStage relative to primaryStage
                 aboutStage.setX(primaryStage.getX() + 200);
                 aboutStage.setY(primaryStage.getY() + 100);
-                
+
                 // set aboutStage width & height
                 aboutStage.setHeight(200);
                 aboutStage.setWidth(300);
-                
+
                 // show new about dialog
                 aboutStage.show();
-                
-                
+
             }
         });
         // TO-DO: shortcuts key_combinations 
